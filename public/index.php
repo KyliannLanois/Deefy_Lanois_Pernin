@@ -1,5 +1,14 @@
 <?php
+
+use deefy\action\AddTrackAction;
+use deefy\action\CreatePlaylistAction;
+use deefy\action\DisplayAllPlaylistAction;
+use deefy\action\DisplayPlaylistAction;
+use deefy\repository\DeefyRepo;
+use touiteur\dispatch\Dispatcher;
+
 session_start();
+
 require_once __DIR__ . '/../vendor/autoload.php';
 
 
@@ -12,6 +21,7 @@ try {
     $dispatcher->addRoute('afficherAllPlaylist',DisplayAllPlaylistAction::class);
     $dispatcher->addRoute('afficherPlaylist',DisplayPlaylistAction::class);
     $dispatcher->addRoute('creerPlaylist',CreatePlaylistAction::class);
+    $dispatcher->addRoute('ajouterTrack',AddTrackAction::class);
     $dispatcher->run();
 
 
