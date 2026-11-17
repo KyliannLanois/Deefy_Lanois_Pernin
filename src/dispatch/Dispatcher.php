@@ -87,7 +87,7 @@ class Dispatcher
            </nav>
 </div>
            </header>
-           <main >
+           <main>
            <div>
            
            $main

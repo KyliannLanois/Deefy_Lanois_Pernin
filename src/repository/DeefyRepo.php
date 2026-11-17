@@ -4,6 +4,7 @@ namespace deefy\repository;
 
 use deefy\objet\Playlist;
 use deefy\objet\Track;
+use PDO;
 
 class DeefyRepo
 {
