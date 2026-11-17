@@ -2,6 +2,7 @@
 
 namespace deefy\action;
 
+use deefy\render\PlaylistRenderer;
 use deefy\repository\DeefyRepo;
 
 class DisplayAllPlaylistAction extends Action
@@ -11,22 +12,15 @@ class DisplayAllPlaylistAction extends Action
     {
         $repo = DeefyRepo::getInstance();
 
+        $playlists = $repo->getPlaylists();
 
-
-
-
-
-
-        return $this->renderForm();
-    }
-
-    public function renderForm(): string{
-        $html = " ";
-
-
-
-
+        $html = "";
+        foreach($playlists as $playlist){
+            $renderer = new PlaylistRenderer($playlist);
+            $html .= $renderer->render();
+        }
 
         return $html;
     }
+
 }
