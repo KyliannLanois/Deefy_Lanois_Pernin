@@ -71,20 +71,21 @@ class Dispatcher
         <meta charset="UTF-8">
         <title>Deefy</title>
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-        </head>
-        <body>
-            <header>
-                <div class="flex justify-between items-center border-b-2 border-[#00E676] bg-gray-900">
+        </head> 
+        <body class="bg-gray-800">
+            <header class="sticky top-0 left-0 z-50 mb-10">
+                <div class="flex justify-between items-center border-b-2 border-[#00E676] bg-gray-900 ">
                     <a href="?action=default"> <img src="image/Logo.png" class="w-32 h-32 p-4 rounded-full" ></a>
-                    <h1 class="text-8xl font-bold bg-gradient-to-r from-[#39F5A5] to-[#00E676] bg-clip-text text-transparent">Deefy</h1>
+                    <h1 class="text-5xl font-bold bg-gradient-to-r from-[#39F5A5] to-[#00E676] bg-clip-text text-transparent">Ecoutez musiques et podcasts !</h1>
                     <nav>
-                        <a href="?action=creePlaylist" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Créer Playlist</a>
-                        <a href="?action=afficherPlaylist" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Afficher ma playlist en cours</a>
+                        <a href="?action=creerPlaylist" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Créer Playlist</a>
+                        <a href="?action=afficherPlaylistAction" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Afficher ma playlist en cours</a>
                    </nav>
                </div>
            </header>
            
-            <main class="bg-gray-800">
+            <main>
+                <h1 class="text-4xl font-bold text-center bg-gradient-to-r from-[#39F5A5] to-[#00E676] bg-clip-text text-transparent mb-20">Liste des playlists enregistrées</h1>
                $main
             </main>
             

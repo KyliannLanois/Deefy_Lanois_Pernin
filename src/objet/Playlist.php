@@ -29,6 +29,10 @@ class Playlist
         return $this->tracks;
     }
 
+    public function getTracksCount(): int
+    {
+        return count($this->tracks);
+    }
 
 
 }
