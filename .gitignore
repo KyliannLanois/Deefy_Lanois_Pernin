@@ -35,3 +35,4 @@ ReflectionData.json
 
 # Output of tests/StubsMigrator.php (per-version stub trees)
 versioned/
+/composer.lock
