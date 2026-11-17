@@ -81,7 +81,9 @@ class Dispatcher
             <a href="?action=default" <span>Deefy App</span> </a>
             <nav>
             
-            <a href="?action=afficherTendances" class="gap-2 mb-2 flex h-14 w-fit items-center justify-center rounded-full px-4 text-xl font-extrabold dark:text-white dark:hover:bg-gray-900 text-black hover:bg-gray-200 xl:justify-start">{$iTendances}Tendances</a>
+            <a href="?action=afficherAllPlaylist" Mes Playlist</a>
+            <a href="?action=creePlaylist" Crée Playlist</a>
+            <a href="?action=afficherPlaylist" Afficher ma playlist en cours</a>
      
            </nav>
 </div>
