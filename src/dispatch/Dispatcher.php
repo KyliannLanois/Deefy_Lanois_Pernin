@@ -38,7 +38,7 @@ class Dispatcher
 
     public function run(): void {
         if (!isset($this->actions[$this->action])) {
-            throw new RouterException("Action '{$this->action}' not found"); //TODO routerException
+            throw new RouterException("Action '{$this->action}' not found");
         }
 
         $class  = $this->actions[$this->action];
@@ -69,35 +69,27 @@ class Dispatcher
         <html lang="fr">
         <head>
         <meta charset="UTF-8">
-        <title>Touiteur</title>
+        <title>Deefy</title>
         </head>
         <body>
-        <div>
-        
-
             <header>
-            <div>
-            <a href="?action=default" <span>Deefy App</span> </a>
-            <nav>
-            
-            <a href="?action=afficherAllPlaylist" Mes Playlist</a>
-            <a href="?action=creePlaylist" Crée Playlist</a>
-            <a href="?action=afficherPlaylist" Afficher ma playlist en cours</a>
-     
-           </nav>
-</div>
+                <div>
+                    <img src="image/Logo.png" href="?action=default">
+                    <nav>
+                        <a href="?action=creePlaylist" Crée Playlist</a>
+                        <a href="?action=afficherPlaylist" Afficher ma playlist en cours</a>
+                   </nav>
+               </div>
            </header>
-           <main >
-           <div>
            
-           $main
-</div>
-           </main>
-           </div>
-           <footer>
+            <main>
+               $main
+            </main>
+            
+            <footer>
             </footer>
-           </body>
-HTML;
+        </body>
+        HTML;
         echo $html;
     }
 

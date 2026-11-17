@@ -4,8 +4,8 @@ use deefy\action\AddTrackAction;
 use deefy\action\CreatePlaylistAction;
 use deefy\action\DisplayAllPlaylistAction;
 use deefy\action\DisplayPlaylistAction;
+use deefy\dispatch\Dispatcher;
 use deefy\repository\DeefyRepo;
-use touiteur\dispatch\Dispatcher;
 
 session_start();
 
