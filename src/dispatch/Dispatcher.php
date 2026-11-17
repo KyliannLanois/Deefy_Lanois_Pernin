@@ -70,25 +70,28 @@ class Dispatcher
         <head>
         <meta charset="UTF-8">
         <title>Deefy</title>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
         </head>
         <body>
             <header>
-                <div>
-                    <img src="image/Logo.png" href="?action=default">
+                <div class="flex justify-between items-center border-b-2 border-[#00E676] bg-gray-900">
+                    <a href="?action=default"> <img src="image/Logo.png" class="w-32 h-32 p-4 rounded-full" ></a>
+                    <h1 class="text-8xl font-bold bg-gradient-to-r from-[#39F5A5] to-[#00E676] bg-clip-text text-transparent">Deefy</h1>
                     <nav>
-                        <a href="?action=creePlaylist" Crée Playlist</a>
-                        <a href="?action=afficherPlaylist" Afficher ma playlist en cours</a>
+                        <a href="?action=creePlaylist" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Créer Playlist</a>
+                        <a href="?action=afficherPlaylist" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Afficher ma playlist en cours</a>
                    </nav>
                </div>
            </header>
            
-            <main>
+            <main class="bg-gray-800">
                $main
             </main>
             
             <footer>
             </footer>
         </body>
+        </html>
         HTML;
         echo $html;
     }
