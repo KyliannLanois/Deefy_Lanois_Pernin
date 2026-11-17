@@ -1,9 +1,8 @@
 <?php
 
-namespace touiteur\dispatch;
+namespace deefy\dispatch;
 
-use touiteur\exception\RouterException;
-use src\action\Action;
+
 
 
 /**

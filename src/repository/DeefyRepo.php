@@ -110,7 +110,7 @@ class DeefyRepo
     public function buildPlaylistTrack(int $id_pl) : array {
         $tracksId = [];
         $sql = "SELECT * FROM playlist2track 
-         WHERE id_pl = :id_pl";
+         WHERE id_pl = :id_pl ORDER BY no_piste_dans_liste ASC";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             "id_pl" => $id_pl
@@ -140,5 +140,22 @@ class DeefyRepo
         }
         return $playlists;
     }
+
+    public function getPlaylist (int $id) : Playlist{
+        $sql = "SELECT * FROM playlist WHERE id = :id";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            "id" => $id
+        ]);
+        $playlist = $stmt->fetch();
+        return new Playlist(
+            $playlist['id'],
+            $playlist['nom'],
+            $this->buildPlaylistTrack($playlist['id'])
+        );
+
+    }
+
+
 
 }

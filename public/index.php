@@ -1,4 +1,8 @@
 <?php
+
+use deefy\dispatch\Dispatcher;
+use deefy\repository\DeefyRepo;
+
 session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 
