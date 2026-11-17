@@ -4,7 +4,7 @@ namespace deefy\render;
 
 use deefy\objet\Playlist;
 
-class PlaylistRenderer implements renderer
+class PlaylistRenderer implements Renderer
 {
     private Playlist $playlist;
 

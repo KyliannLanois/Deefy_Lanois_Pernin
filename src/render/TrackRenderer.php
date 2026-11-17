@@ -25,11 +25,11 @@ HTML;
 
     public function renderLong(): string
     {
-        $auteur  = htmlspecialchars($this->track->getAuteurPodcast()) ;
-        $date = htmlspecialchars($this->track->getDatePodcast());
-        $artiste= htmlspecialchars($this->track->getArtisteAlbum());
-        $album  = htmlspecialchars($this->track->getTitreAlbum());
-        $annee = htmlspecialchars($this->track->getAnneeAlbum());
+        $auteur  = htmlspecialchars($this->track->getAuteurPodcast()??0) ;
+        $date = htmlspecialchars($this->track->getDatePodcast()??0);
+        $artiste= htmlspecialchars($this->track->getArtisteAlbum()??0);
+        $album  = htmlspecialchars($this->track->getTitreAlbum()??0);
+        $annee = htmlspecialchars($this->track->getAnneeAlbum()??0);
 
 
         $htmlP = <<<HTML
