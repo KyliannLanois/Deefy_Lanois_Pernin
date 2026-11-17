@@ -18,7 +18,6 @@ try {
     $dispatcher = new Dispatcher();
 
     $dispatcher->addRoute('default', DisplayAllPlaylistAction::class);
-    $dispatcher->addRoute('afficherAllPlaylist',DisplayAllPlaylistAction::class);
     $dispatcher->addRoute('afficherPlaylist',DisplayPlaylistAction::class);
     $dispatcher->addRoute('creerPlaylist',CreatePlaylistAction::class);
     $dispatcher->addRoute('ajouterTrack',AddTrackAction::class);
