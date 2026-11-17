@@ -2,8 +2,21 @@
 
 namespace deefy\render;
 
-abstract class PlaylistRendererDefault implements Renderer
+use deefy\objet\Track;
+
+abstract class AudioRenderer implements Renderer
 {
+
+    protected Track $track;
+
+    /**
+     * Constructeur de AudioRenderer
+     * @param Track $track
+     */
+    public function __construct(Track $track)
+    {
+        $this->track = $track;
+    }
 
 
     public function render(int $selector = 1): string
