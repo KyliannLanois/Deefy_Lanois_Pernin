@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace deefy\action;
 
@@ -12,65 +13,83 @@ class AddTrackAction extends Action
 
     public function execute(): string
     {
-        if(!isset($_SESSION['playlist'])){
-            return "<p class= 'text-center text-[#00E676] font-bold text-xl mb-6'>Impossible d'ajouter un track vous n'avez aucune playlist en cours</p>";
+        if (!isset($_SESSION['playlist'])) {
+            return "<p class='text-center text-[#00E676] font-bold text-xl mb-6'>
+            Impossible d'ajouter un track : vous n'avez aucune playlist en cours
+        </p>";
         }
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
             $repo = DeefyRepo::getInstance();
-
-
             $playlist = $_SESSION['playlist'];
-
 
             $titre = trim($_POST['titre'] ?? '');
             $genre = trim($_POST['genre'] ?? '');
             $duree = (int)($_POST['duree'] ?? 0);
             $type = $_POST['type'] ?? 'A';
 
+            $artiste_album = !empty($_POST['artiste_album'])? trim($_POST['artiste_album']) : null;
 
-            $artiste_album = !empty($_POST['artiste_album']) ? trim($_POST['artiste_album']) : null;
-            $titre_album = !empty($_POST['titre_album']) ? trim($_POST['titre_album']) : null;
-            $annee_album = !empty($_POST['annee_album']) ? (int)$_POST['annee_album'] : null;
-            $numero_album = !empty($_POST['numero_album']) ? (int)$_POST['numero_album'] : null;
-            $auteur_podcast = !empty($_POST['auteur_podcast']) ? trim($_POST['auteur_podcast']) : null;
-            $date_podcast = !empty($_POST['date_podcast']) ? $_POST['date_podcast'] : null;
+            $titre_album = !empty($_POST['titre_album'])? trim($_POST['titre_album']) : null;
+
+            $annee_album = !empty($_POST['annee_album'])? (int)$_POST['annee_album'] : null;
+
+            $numero_album = !empty($_POST['numero_album'])? (int)$_POST['numero_album'] : null;
+
+            $auteur_podcast = !empty($_POST['auteur_podcast'])? trim($_POST['auteur_podcast']) : null;
+
+            $date_podcast = !empty($_POST['date_podcast'])? $_POST['date_podcast'] : null;
 
 
-            if (!isset($_FILES['audio']) || $_FILES['audio']['error'] === UPLOAD_ERR_NO_FILE) {
+            // Vérification du fichier audio
+            if (!isset($_FILES['audio']) ||
+                $_FILES['audio']['error'] === UPLOAD_ERR_NO_FILE) {
                 return "<p>Veuillez sélectionner un fichier audio MP3.</p>";
             }
 
             $file = $_FILES['audio'];
-            if ($file['error'] !== UPLOAD_ERR_OK) {
-                return "<p class='text-sm dark:text-gray-400'> Erreur dans l'envoi de l'audio</p>";
-            }
-            $maxSize = 150 * 1024 * 1024;
 
+            if ($file['error'] !== UPLOAD_ERR_OK) {
+                return "<p class='text-sm dark:text-gray-400'>Erreur dans l'envoi de l'audio</p>";
+            }
+
+            $maxSize = 150 * 1024 * 1024;
 
             if ($file['size'] > $maxSize) {
                 return "<p class='text-sm dark:text-gray-400'>L'audio doit faire moins de 150Mo</p>";
             }
 
+            // Vérification du format MP3
             $finfo = new finfo(FILEINFO_MIME_TYPE);
+
             $formatsOk = [
                 'audio/mp3' => 'mp3',
                 'audio/mpeg' => 'mp3'
             ];
+
             $typeFichier = $finfo->file($file['tmp_name']);
+
             if (!isset($formatsOk[$typeFichier])) {
-                return "<p>Format non admis ! mp3 seulement </p>";
+                return "<p>Format non admis ! MP3 seulement</p>";
             }
 
 
-            $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
-            $newFileName = uniqid() . "." . $extension;
+            // Vérifier si la piste existe déjà
+            $exist = $repo->TrackExists($titre, $duree, $artiste_album, $annee_album);
 
-            if (!move_uploaded_file($file['tmp_name'], "audio/" . $newFileName)) {
-                return "<p>Erreur lors de l'envoie de l'audio</p>";
-            }
-            $exist = $repo->TrackExists($titre,$duree,$artiste_album,$annee_album);
 
-            if($exist === null){
+            if ($exist === null) {
+
+                // La piste n'existe pas : déplacement du fichier
+                $extension = $formatsOk[$typeFichier];
+                $newFileName = uniqid() . "." . $extension;
+
+                if (!move_uploaded_file($file['tmp_name'],"audio/" . $newFileName)) {
+                    return "<p>Erreur lors de l'envoi de l'audio</p>";
+                }
+
+                // Insertion de la nouvelle piste
                 $trackId = $repo->insertTrack(
                     $titre,
                     $genre,
@@ -84,24 +103,31 @@ class AddTrackAction extends Action
                     $auteur_podcast,
                     $date_podcast
                 );
-            }
-            $track = new Track($trackId, $titre,
-                $genre,
-                $duree,
-                $newFileName,
-                $type,
-                $artiste_album,
-                $titre_album,
-                $annee_album,
-                $numero_album,
-                $auteur_podcast,
-                $date_podcast);
-            $repo->InsertTrack2Playlist($playlist, $track);
-            $playlist->addTrack($track);
-            $_SESSION['playlist'] = $playlist;
-            return $this->renderForm("Votre Musique / Podcast a été ajouté");
-        }
 
+                // Récupération de l'objet Track
+                $track = $repo->getTrack($trackId);
+
+            } else {
+
+                // La piste existe déjà : on récupère l'objet existant
+                $track = $exist;
+            }
+
+
+            // Vérification et ajout à la playlist
+            if (!$repo->InsertTrack2Playlist($playlist, $track)) {
+                return $this->renderForm("Votre Musique / Podcast est déjà présent dans la playlist");
+            }
+
+            // Mise à jour de la playlist
+            $playlist->addTrack($track);
+
+            $_SESSION['playlist'] = $playlist;
+
+            return $this->renderForm(
+                "Votre Musique / Podcast a été ajouté"
+            );
+        }
 
         return $this->renderForm("Ajouter une musique ou un podcast");
     }
@@ -140,10 +166,10 @@ class AddTrackAction extends Action
             <fieldset id="fields_album" class="border border-[#00E676]/40 rounded-lg p-6 mb-6 bg-gray-800">
                 <legend class="text-[#00E676] font-bold text-lg px-3">Détails de l'album</legend>
 
-                <label for="artiste_album" class="block mb-2 font-medium text-gray-200">Artiste de l'album :</label>
+                <label for="artiste_album" class="block mb-2 font-medium text-gray-200">Artiste :</label>
                 <input type="text" id="artiste_album" name="artiste_album" placeholder="Ex : Pink Floyd" class="w-full p-3 mb-5 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#00E676] focus:ring-2 focus:ring-[#00E676]/30 transition">
 
-                <label for="titre_album" class="block mb-2 font-medium text-gray-200">Titre de l'album :</label>
+                <label for="titre_album" class="block mb-2 font-medium text-gray-200">Nom de l'album :</label>
                 <input type="text" id="titre_album" name="titre_album" placeholder="Ex : The Wall" class="w-full p-3 mb-5 bg-gray-900 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-[#00E676] focus:ring-2 focus:ring-[#00E676]/30 transition">
 
                 <label for="annee_album" class="block mb-2 font-medium text-gray-200">Année de l'album :</label>
@@ -177,7 +203,6 @@ class AddTrackAction extends Action
     </script>
     HTML;
     }
-
 
 
 }

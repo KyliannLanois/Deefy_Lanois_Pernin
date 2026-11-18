@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace deefy\action;
 
@@ -10,7 +11,7 @@ class DisplayPlaylistAction extends Action
     public function execute(): string
     {
         $repo = DeefyRepo::getInstance();
-        $playlist = $repo->getPlaylist(htmlspecialchars($_GET['id']));
+        $playlist = $repo->getPlaylist(filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT));
 
         $_SESSION['playlist'] = $playlist;
 

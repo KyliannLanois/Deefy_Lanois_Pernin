@@ -1,5 +1,7 @@
 <?php
+declare(strict_types=1);
 require_once __DIR__ . '/../vendor/autoload.php';
+
 use deefy\action\AddTrackAction;
 use deefy\action\CreatePlaylistAction;
 use deefy\action\DisplayAllPlaylistAction;
@@ -10,7 +12,7 @@ use deefy\repository\DeefyRepo;
 
 session_start();
 
-require_once __DIR__ . '/../vendor/autoload.php';
+
 
 
 try {

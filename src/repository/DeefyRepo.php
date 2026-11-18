@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace deefy\repository;
 
 use deefy\objet\Playlist;
@@ -63,29 +63,6 @@ class DeefyRepo
     }
 
 
-    public function getTracks () : array {
-        $tracks = [];
-        $sql = "SELECT * FROM track";
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute();
-        foreach ($stmt->fetchAll() as $track){
-            $tracks[] = new Track(
-                (int) $track['id'],
-                $track['titre'],
-                $track['genre'],
-                (int) $track['duree'],
-                $track['filename'],
-                $track['type'],
-                $track['artiste_album'],
-                $track['titre_album'],
-                (int)$track['annee_album'],
-                (int)$track['numero_album'],
-                $track['auteur_podcast'],
-                (int)$track['date_podcast']);
-        }
-
-        return $tracks;
-    }
 
     public function getTrack (int $id) : Track{
         $sql = "SELECT * FROM track WHERE id = :id";
@@ -106,7 +83,7 @@ class DeefyRepo
             (int)$track['annee_album'],
             (int)$track['numero_album'],
             $track['auteur_podcast'],
-            (int)$track['date_podcast']);
+            $track['date_podcast']);
     }
 
     public function buildPlaylistTrack(int $id_pl) : array {
@@ -182,24 +159,36 @@ class DeefyRepo
 
     public function InsertTrack2Playlist(Playlist $playlist,Track $track) : bool{
 
-        $idPlaylist = $playlist->getId();
-        $idTrack = $track->getId();
-        $sqlCount = "SELECT COUNT(*) FROM playlist2track WHERE id_pl = $idPlaylist";
-        $nbPiste = $this->pdo->query($sqlCount)->fetchColumn();
-
-
-        $sql = "INSERT INTO playlist2track VALUES (:idPlaylist, :idTrack, :no_piste_dans_liste)";
-        $stmt = $this->pdo->prepare($sql);
-        $noPiste = $nbPiste+1;
+        $sqlExist = "SELECT count(*) FROM playlist2track WHERE id_pl = :id_playlist AND id_track = :id_track";
+        $stmt = $this->pdo->prepare($sqlExist);
         $stmt->execute([
-            "idPlaylist" => $idPlaylist,
-            "idTrack" => $idTrack,
-            "no_piste_dans_liste" => $noPiste
+            "id_playlist" => $playlist->getId(),
+            "id_track" => $track->getId()
         ]);
+        if((int)$stmt->fetchColumn() > 0){
+            return false;
+        } else{
+            $idPlaylist = $playlist->getId();
+            $idTrack = $track->getId();
+            $sqlCount = "SELECT COUNT(*) FROM playlist2track WHERE id_pl = $idPlaylist";
+            $nbPiste = $this->pdo->query($sqlCount)->fetchColumn();
+
+
+            $sql = "INSERT INTO playlist2track VALUES (:idPlaylist, :idTrack, :no_piste_dans_liste)";
+            $stmt = $this->pdo->prepare($sql);
+            $noPiste = $nbPiste+1;
+            $stmt->execute([
+                "idPlaylist" => $idPlaylist,
+                "idTrack" => $idTrack,
+                "no_piste_dans_liste" => $noPiste
+            ]);
 
 
 
-        return true;
+            return true;
+        }
+
+
     }
     public function TrackExists(string $titre, int $duree, string $artiste, int $annee_album): ?Track
     {
@@ -220,6 +209,24 @@ class DeefyRepo
         }
 
         return $this->getTrack($rs['id']);
+    }
+
+    public function InsertPlaylist(string $nom) : ?int
+    {
+        $sqlExist = "SELECT COUNT(*) FROM playlist WHERE nom = :nom";
+        $stmt = $this->pdo->prepare($sqlExist);
+        $stmt->execute([
+            "nom" => $nom
+        ]);
+        if((int)$stmt->fetchColumn() > 0){
+            return null;
+        }
+        $sql = "INSERT INTO playlist (nom) VALUES (:nom)";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            "nom" => $nom
+        ]);
+        return (int) $this->pdo->lastInsertId();
     }
 
 
