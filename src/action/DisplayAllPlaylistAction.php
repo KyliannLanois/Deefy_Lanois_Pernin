@@ -2,7 +2,7 @@
 
 namespace deefy\action;
 
-use deefy\render\PlaylistRenderer;
+
 use deefy\repository\DeefyRepo;
 
 class DisplayAllPlaylistAction extends Action
