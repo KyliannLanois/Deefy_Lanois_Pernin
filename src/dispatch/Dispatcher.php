@@ -84,8 +84,7 @@ class Dispatcher
                </div>
            </header>
            
-            <main>
-                <h1 class="text-4xl font-bold text-center bg-gradient-to-r from-[#39F5A5] to-[#00E676] bg-clip-text text-transparent mb-20">Liste des playlists enregistrées</h1>
+            <main class="flex flex-col justify-center items-center">
                $main
             </main>
             
