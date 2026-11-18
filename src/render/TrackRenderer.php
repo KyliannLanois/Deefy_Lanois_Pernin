@@ -17,9 +17,10 @@ class TrackRenderer extends AudioRenderer
         $filename = htmlspecialchars($this->track->getFilename());
 
         return <<<HTML
-        <span><strong>{$titre} - {$duree} secondes</strong> </span>
+        <span><strong>{$titre} - {$duree} secondes -  cliquez pour + d'infos </strong> 
+        
         <audio controls preload="none" src={$filename}></audio>
-        <span class="plus">+ d'infos sur la musique</span>
+        
 HTML;
     }
 

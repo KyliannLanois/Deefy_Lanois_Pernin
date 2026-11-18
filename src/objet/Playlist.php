@@ -34,5 +34,9 @@ class Playlist
         return count($this->tracks);
     }
 
+    public function addTrack(Track $track){
+        $this->tracks[] = $track;
+    }
+
 
 }

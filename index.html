@@ -7,20 +7,75 @@
 </head>
 <body>
 
-<details>
-    <!-- Toujours visible AVANT de cliquer -->
-    <summary>
-        <span><strong>Titre de la piste</strong></span>
-        <audio controls preload="none" src="vine-boom-meme_cCCpxZG.mp3" style="height: 32px; width: 200px;"></audio>
-        <span class="more-info">+ d'infos</span>
-    </summary>
 
-    <!-- Affiché UNIQUEMENT après avoir cliqué sur "+ d'infos" -->
-    <div class="details-content">
-        <p>Artiste : Nom de l'artiste | Album : Nom de l'album (2024)</p>
-        <p>Durée : 3m 20s | Genre : Rock</p>
-    </div>
-</details>
+<p>{$texte}</p>
+<form action="?action=add-track" method="post" enctype="multipart/form-data">
+    <fieldset>
+        <legend>Ajouter Track - Informations générales</legend>
+
+        <label for="titre">Titre :</label>
+        <input type="text" id="titre" name="titre" required><br><br>
+
+        <label for="genre">Genre :</label>
+        <input type="text" id="genre" name="genre" required><br><br>
+
+        <label for="duree">Durée (en secondes) :</label>
+        <input type="number" id="duree" name="duree" min="1" required><br><br>
+
+        <label for="filename">Fichier audio (.mp3) :</label>
+        <input type="file" id="filename" name="filename" accept=".mp3,audio/mpeg" required><br><br>
+
+        <span>Type de piste :</span>
+        <input type="radio" id="type_a" name="type" value="A" checked onchange="toggleTypeFields()">
+        <label for="type_a">Album (A)</label>
+
+        <input type="radio" id="type_p" name="type" value="P" onchange="toggleTypeFields()">
+        <label for="type_p">Podcast (P)</label>
+    </fieldset>
+
+    <br>
+
+    <!-- Champs spécifiques à un Album (Type A) -->
+    <fieldset id="fields_album">
+        <legend>Détails de l'Album</legend>
+
+        <label for="artiste_album">Artiste de l'album :</label>
+        <input type="text" id="artiste_album" name="artiste_album"><br><br>
+
+        <label for="titre_album">Titre de l'album :</label>
+        <input type="text" id="titre_album" name="titre_album"><br><br>
+
+        <label for="annee_album">Année de l'album :</label>
+        <input type="number" id="annee_album" name="annee_album" min="1900" max="2100"><br><br>
+
+        <label for="numero_album">Numéro de piste dans l'album :</label>
+        <input type="number" id="numero_album" name="numero_album" min="1">
+    </fieldset>
+
+    <!-- Champs spécifiques à un Podcast (Type P) -->
+    <fieldset id="fields_podcast" hidden>
+        <legend>Détails du Podcast</legend>
+
+        <label for="auteur_podcast">Auteur du podcast :</label>
+        <input type="text" id="auteur_podcast" name="auteur_podcast"><br><br>
+
+        <label for="date_podcast">Date du podcast :</label>
+        <input type="date" id="date_podcast" name="date_podcast">
+    </fieldset>
+
+    <br>
+    <button type="submit">Ajouter la piste</button>
+</form>
+
+<script>
+    function toggleTypeFields() {
+        const isAlbum = document.getElementById('type_a').checked;
+        document.getElementById('fields_album').hidden = !isAlbum;
+        document.getElementById('fields_podcast').hidden = isAlbum;
+    }
+</script>
+
+
 
 </body>
 </html>
