@@ -1,5 +1,6 @@
 /vendor/
 /config/db.config.ini
+composer.lock
 /public/uploads/*
 !/public/uploads/.gitkeep
 .idea/
