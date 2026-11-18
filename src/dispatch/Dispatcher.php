@@ -79,7 +79,7 @@ class Dispatcher
                     <h1 class="text-5xl font-bold bg-gradient-to-r from-[#39F5A5] to-[#00E676] bg-clip-text text-transparent">Ecoutez musiques et podcasts !</h1>
                     <nav>
                         <a href="?action=creerPlaylist" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Créer Playlist</a>
-                        <a href="?action=afficherPlaylistAction" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Afficher ma playlist en cours</a>
+                        <a href="?action=afficherPlaylistSession" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Afficher ma playlist en cours</a>
                    </nav>
                </div>
            </header>
