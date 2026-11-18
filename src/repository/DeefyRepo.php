@@ -201,7 +201,26 @@ class DeefyRepo
 
         return true;
     }
+    public function TrackExists(string $titre, int $duree, string $artiste, int $annee_album): ?Track
+    {
+        $sql = "SELECT * FROM track WHERE titre = :titre AND duree = :duree AND artiste_album = :artiste_album AND annee_album = :annee_album";
 
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            "titre" => $titre,
+            "duree" => $duree,
+            "artiste_album" => $artiste,
+            "annee_album" => $annee_album
+        ]);
+
+        $rs = $stmt->fetch();
+
+        if ($rs === false) {
+            return null;
+        }
+
+        return $this->getTrack($rs['id']);
+    }
 
 
 }

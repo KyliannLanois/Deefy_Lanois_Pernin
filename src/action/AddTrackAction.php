@@ -68,20 +68,23 @@ class AddTrackAction extends Action
             if (!move_uploaded_file($file['tmp_name'], "audio/" . $newFileName)) {
                 return "<p>Erreur lors de l'envoie de l'audio</p>";
             }
+            $exist = $repo->TrackExists($titre,$duree,$artiste_album,$annee_album);
 
-            $trackId = $repo->insertTrack(
-                $titre,
-                $genre,
-                $duree,
-                $newFileName,
-                $type,
-                $artiste_album,
-                $titre_album,
-                $annee_album,
-                $numero_album,
-                $auteur_podcast,
-                $date_podcast
-            );
+            if($exist === null){
+                $trackId = $repo->insertTrack(
+                    $titre,
+                    $genre,
+                    $duree,
+                    $newFileName,
+                    $type,
+                    $artiste_album,
+                    $titre_album,
+                    $annee_album,
+                    $numero_album,
+                    $auteur_podcast,
+                    $date_podcast
+                );
+            }
             $track = new Track($trackId, $titre,
                 $genre,
                 $duree,
