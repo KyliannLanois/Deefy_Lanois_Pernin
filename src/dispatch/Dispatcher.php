@@ -5,6 +5,8 @@ namespace deefy\dispatch;
 
 
 
+use Exception;
+
 /**
  * Répartiteur central chargé de sélectionner et d’exécuter une action applicative
  * à partir du paramètre de requête correspondant.
@@ -38,7 +40,7 @@ class Dispatcher
 
     public function run(): void {
         if (!isset($this->actions[$this->action])) {
-            throw new RouterException("Action '{$this->action}' not found");
+            throw new Exception("Action '{$this->action}' not found");
         }
 
         $class  = $this->actions[$this->action];

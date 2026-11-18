@@ -15,8 +15,18 @@ class DisplayPlaylistAction extends Action
         $_SESSION['playlist'] = $playlist;
 
         $renderer = new PlaylistRenderer($playlist);
-        return $renderer->render();
+        $html = $renderer->render();
 
+        $html .= <<<HTML
+            <a href="?action=addTrack">
+                <div class="bg-gray-800 rounded-full p-2 m-1 shadow-md ">
+                    <h2 class="text-center text-lg font-bold bg-gradient-to-r from-[#39F5A5] to-[#00E676] bg-clip-text text-transparent">Ajouter un track</h2>
+</div>
+</a>
+
+HTML;
+
+    return $html;
     }
 
 }

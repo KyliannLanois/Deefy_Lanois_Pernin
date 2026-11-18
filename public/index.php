@@ -21,7 +21,7 @@ try {
     $dispatcher->addRoute('default', DisplayAllPlaylistAction::class);
     $dispatcher->addRoute('afficherPlaylist',DisplayPlaylistAction::class);
     $dispatcher->addRoute('creerPlaylist',CreatePlaylistAction::class);
-    $dispatcher->addRoute('add-track',AddTrackAction::class);
+    $dispatcher->addRoute('addTrack',AddTrackAction::class);
     $dispatcher->addRoute("afficherPlaylistSession",DisplaySessionAction::class);
     $dispatcher->run();
 
