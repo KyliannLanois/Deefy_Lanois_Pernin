@@ -19,7 +19,7 @@ class TrackRenderer extends AudioRenderer
         return <<<HTML
         <span><strong>{$titre} - {$duree} secondes -  cliquez pour + d'infos </strong> 
         
-        <audio controls preload="none" src={$filename}></audio>
+        <audio controls preload="none" src="audio/{$filename}"></audio>
         
 HTML;
     }

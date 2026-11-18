@@ -162,7 +162,7 @@ class DeefyRepo
                                  string $type,?string $artiste_album =null,?string $titre_album =null,
                                  ?int $annee_album= null,?int $numero_album= null,?string $auteur_podcast= null,?int $date_podcast = null) : int
     {
-        $sql = "INSERT INTO track VALUES (:titre, :genre, :duree, :filename, :type, :artiste_album, :titre_album, :annee_album, :numero_album, :auteur_podcast, :date_podcast)";
+        $sql = "INSERT INTO track (titre, genre, duree, filename, type, artiste_album, titre_album, annee_album, numero_album, auteur_podcast, date_podcast) VALUES (:titre, :genre, :duree, :filename, :type, :artiste_album, :titre_album, :annee_album, :numero_album, :auteur_podcast, :date_podcast)";
         $stmt = $this->pdo->prepare($sql);
         $stmt->execute([
             "titre" => $titre,
@@ -185,15 +185,16 @@ class DeefyRepo
         $idPlaylist = $playlist->getId();
         $idTrack = $track->getId();
         $sqlCount = "SELECT COUNT(*) FROM playlist2track WHERE id_pl = $idPlaylist";
-        $nbPiste = $this->pdo->query($sqlCount);
+        $nbPiste = $this->pdo->query($sqlCount)->fetchColumn();
 
 
         $sql = "INSERT INTO playlist2track VALUES (:idPlaylist, :idTrack, :no_piste_dans_liste)";
         $stmt = $this->pdo->prepare($sql);
+        $noPiste = $nbPiste+1;
         $stmt->execute([
             "idPlaylist" => $idPlaylist,
             "idTrack" => $idTrack,
-            "no_piste_dans_liste" => $nbPiste + 1
+            "no_piste_dans_liste" => $noPiste
         ]);
 
 
