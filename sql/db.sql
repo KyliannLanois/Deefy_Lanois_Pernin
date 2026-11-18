@@ -32,11 +32,11 @@ CREATE TABLE `track` (
                          `annee_album` int(4) DEFAULT NULL,
                          `numero_album` int(11) DEFAULT NULL,
                          `auteur_podcast` varchar(100) DEFAULT NULL,
-                         `date_posdcast` date DEFAULT NULL,
+                         `date_podcast` date DEFAULT NULL,
                          PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `track` (`id`, `titre`, `genre`, `duree`, `filename`, `type`, `artiste_album`, `titre_album`, `annee_album`, `numero_album`, `auteur_podcast`, `date_posdcast`) VALUES
+INSERT INTO `track` (`id`, `titre`, `genre`, `duree`, `filename`, `type`, `artiste_album`, `titre_album`, `annee_album`, `numero_album`, `auteur_podcast`, `date_podcast`) VALUES
                                                                                                                                                                                 (1,	'Wish You Were Here',	'rock',	334,	'pink_wish.mp3',	'A',	'Pink Floyd',	'Wish You Were Here',	1975,	1,	NULL,	NULL),
                                                                                                                                                                                 (2,	'Samba Pati',	'rock',	300,	'santana_abra.mp3',	'A',	'Santana',	'Abraxas',	1970,	1,	NULL,	NULL),
                                                                                                                                                                                 (3,	'Danube Bleu',	'musique classique',	300,	'straus_danube.mp3',	'A',	'Johann Strauss',	'Valses',	2000,	1,	NULL,	NULL),

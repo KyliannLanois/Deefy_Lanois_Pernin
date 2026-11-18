@@ -1,9 +1,8 @@
 <?php
 
-namespace touiteur\dispatch;
+namespace deefy\dispatch;
 
-use touiteur\exception\RouterException;
-use src\action\Action;
+
 
 
 /**
@@ -39,7 +38,7 @@ class Dispatcher
 
     public function run(): void {
         if (!isset($this->actions[$this->action])) {
-            throw new RouterException("Action '{$this->action}' not found"); //TODO routerException
+            throw new RouterException("Action '{$this->action}' not found");
         }
 
         $class  = $this->actions[$this->action];
@@ -70,33 +69,31 @@ class Dispatcher
         <html lang="fr">
         <head>
         <meta charset="UTF-8">
-        <title>Touiteur</title>
-        </head>
-        <body>
-        <div>
-        
-
-            <header>
-            <div>
-            <a href="?action=default" <span>Deefy App</span> </a>
-            <nav>
-            
-            <a href="?action=afficherTendances" class="gap-2 mb-2 flex h-14 w-fit items-center justify-center rounded-full px-4 text-xl font-extrabold dark:text-white dark:hover:bg-gray-900 text-black hover:bg-gray-200 xl:justify-start">{$iTendances}Tendances</a>
-     
-           </nav>
-</div>
+        <title>Deefy</title>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        </head> 
+        <body class="bg-gray-800">
+            <header class="sticky top-0 left-0 z-50 mb-10">
+                <div class="flex justify-between items-center border-b-2 border-[#00E676] bg-gray-900 ">
+                    <a href="?action=default"> <img src="image/Logo.png" class="w-32 h-32 p-4 rounded-full" ></a>
+                    <h1 class="text-5xl font-bold bg-gradient-to-r from-[#39F5A5] to-[#00E676] bg-clip-text text-transparent">Ecoutez musiques et podcasts !</h1>
+                    <nav>
+                        <a href="?action=creerPlaylist" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Créer Playlist</a>
+                        <a href="?action=afficherPlaylistAction" class="bg-[#00E676] p-4 m-2 rounded-lg border-black-100 border-1 hover:bg-lime-500"> Afficher ma playlist en cours</a>
+                   </nav>
+               </div>
            </header>
-           <main >
-           <div>
            
-           $main
-</div>
-           </main>
-           </div>
-           <footer>
+            <main>
+                <h1 class="text-4xl font-bold text-center bg-gradient-to-r from-[#39F5A5] to-[#00E676] bg-clip-text text-transparent mb-20">Liste des playlists enregistrées</h1>
+               $main
+            </main>
+            
+            <footer>
             </footer>
-           </body>
-HTML;
+        </body>
+        </html>
+        HTML;
         echo $html;
     }
 
