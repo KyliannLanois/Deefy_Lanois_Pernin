@@ -110,7 +110,7 @@ class AddTrackAction extends Action
     <div class="w-full max-w-2xl mx-auto my-8 p-8 bg-gray-900 border border-[#00E676] rounded-xl text-gray-200 shadow-xl">
         <p class="text-center text-[#00E676] font-bold text-xl mb-6">{$texte}</p>
 
-        <form action="?action=add-track" method="post" enctype="multipart/form-data">
+        <form action="?action=addTrack" method="post" enctype="multipart/form-data">
             <fieldset class="border border-[#00E676]/40 rounded-lg p-6 mb-6 bg-gray-800">
                 <legend class="text-[#00E676] font-bold text-lg px-3">Informations générales</legend>
 
